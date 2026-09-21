@@ -34,7 +34,6 @@ public class operadoresaritmeticos {
         System.out.println("Resultado: "+resultado);
 
         //Multiplica dos números decimales directamente dentro de un System.out.println
-        var v = 0.23, z = 2.36;
-        System.out.println("", v*z);
+        System.out.println("" + (5.23*15.3));
     }
 }
