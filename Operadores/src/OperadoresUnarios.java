@@ -34,8 +34,5 @@ public class OperadoresUnarios {
         System.out.println("Resultado b--: "+resultado);
         System.out.println("b ya se decrementó: "+b);
 
-        //Ejercicios de practica
-
-
     }
 }
