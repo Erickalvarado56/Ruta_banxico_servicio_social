@@ -20,16 +20,28 @@ public class Ejercicio5generacionTicketventa {
         System.out.println("Precio platanos: ");
         var precioPlatanos = Double.parseDouble(consola.nextLine());
 
+        System.out.println("Puede aplicar algun descuento (%)? ");
+        var descuentoPorcentaje = Integer.parseInt(consola.nextLine());
+
+
         //Calculo subtotoal sin impuestos
         var subtotal = precioLeche + precioLechuga + precioPan + precioPlatanos;
         System.out.println("Pago antes de impuestos: " + subtotal);
+        //Aplicar descuento
+        var descuento = subtotal * (descuentoPorcentaje/100.00);
+
+        // Subtotal con descuento aplicado
+        var subtotalconDescuento = subtotal - descuento;
+
         //Calculo total despues de impuestos
         var impuesto = subtotal*0.16;
-        var costoTotal = subtotal + impuesto;
+
+        var costoTotal = subtotalconDescuento + impuesto;
         System.out.printf("""
                 Subtotal: $%.2f
+                Descuento: $%.2f (%d%%)
                 Impuesto (16%%): $%.2f
                 Costo total de la compra: $%.2f
-                """, subtotal, impuesto, costoTotal );
+                """, subtotal, descuento, descuentoPorcentaje, impuesto, costoTotal );
     }
 }
