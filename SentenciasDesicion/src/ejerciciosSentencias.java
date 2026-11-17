@@ -89,6 +89,53 @@ public class ejerciciosSentencias {
                     Margen de Ganancia:   %.2f%%
                     Dictamen:             %s%n
                     """, ingresos, costos, utilidadNeta, margenPorcentual, diagnostico);
+        //}
+
+        System.out.println("*** Sistemas Banxico: Filtro de Seguridad SPEI ***");
+        final var LIMITE_NOCTURNO = 500_000.0;
+        var consola = new Scanner(System.in);
+
+        System.out.print("Ingrese el saldo disponible en la cuenta ($ MXN): ");
+        var saldoCuenta = Double.parseDouble(consola.nextLine());
+
+        System.out.print("Ingrese el monto a transferir ($ MXN): ");
+        var montoTransferencia = Double.parseDouble(consola.nextLine());
+
+        System.out.print("¿La operación se realiza en horario hábil? (true/false): ");
+        var esHorarioHabil = Boolean.parseBoolean(consola.nextLine());
+
+        // Validación defensiva de montos físicos/financieros
+        if (saldoCuenta < 0 || montoTransferencia <= 0) {
+            System.out.println("\nOperación inválida: El saldo no puede ser negativo y el monto debe ser mayor a $0.00.");
+        }
+        // Regla 1: Verificación de liquidez inmediata
+        else if (montoTransferencia > saldoCuenta) {
+            System.out.printf("""
+                    %n--- Operación Declinada ---
+                    Motivo: Fondos insuficientes.
+                    Saldo disponible: $%.2f MXN
+                    Monto solicitado: $%.2f MXN%n
+                    """, saldoCuenta, montoTransferencia);
+        }
+        // Regla 2: Filtro de prevención de fraude fuera de horario
+        else if (montoTransferencia > LIMITE_NOCTURNO && !esHorarioHabil) {
+            System.out.println("""
+                    %n--- Alerta de Seguridad SPEI ---
+                    Operación retenida: Transferencias mayores a $500,000.00 MXN solo se procesan en horario hábil.""");
+        }
+        // Regla 3: Transacción aprobada
+        else {
+            var saldoRestante = saldoCuenta - montoTransferencia;
+            var folioAprobacion = "SPEI-" + (int) (Math.random() * 900_000 + 100_000);
+
+            System.out.printf("""
+                    %n--- Comprobante de Transferencia SPEI ---
+                    Estado:              APROBADA
+                    Folio de Aprobación: %s
+                    Monto Transferido:   $%.2f MXN
+                    Saldo Anterior:      $%.2f MXN
+                    Saldo Restante:      $%.2f MXN%n
+                    """, folioAprobacion, montoTransferencia, saldoCuenta, saldoRestante);
         }
     }
 }
